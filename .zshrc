@@ -1,6 +1,6 @@
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=1000000
+HISTSIZE=10000000
+SAVEHIST=10000000
 bindkey -e
 bindkey "^[[3~" delete-char
 bindkey "^[[4~" delete-char
@@ -13,5 +13,5 @@ RPROMPT="%F{008}%#%F{005}%2C"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
-alias grep="grep --color=auto"
+alias grep="grep --color"
 alias rm="rm -i"
