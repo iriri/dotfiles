@@ -18,23 +18,25 @@ set ls=2
 set stl=[%n:\%f]%m%r%w%y[%{&ff}][%{&enc}]%=[%l,%v][%P]
 set cul
 hi CursorLine cterm=NONE ctermbg=0 ctermfg=NONE
+set cot=menuone,longest
 2mat ErrorMsg '\%80v.'
 
-autocmd BufReadPost *
-  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-  \ |   exe "normal! g`\""
-  \ | endif
+au BufNew * au BufAdd <buffer=abuf> 2mat ErrorMsg '\%80v.'
 
-au FileType myr setlocal noet |
-            \setlocal sts=8 |
-            \setlocal sw=8 |
-            \2mat ErrorMsg '\%100v.'
+au BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+  \   exe "normal! g`\"" |
+  \ endif
 
-au FileType go setlocal sts=8 | setlocal sw=8 | 2mat ErrorMsg '\%100v.'
+au FileType myr,mbld,go
+  \ setl noet |
+  \ setl sts=8 |
+  \ setl sw=8 |
+  \ 2mat ErrorMsg '\%100v.'
 
-au FileType ocaml setlocal commentstring=(*%s*)
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-exe "setlocal rtp+=" . g:opamshare . "/merlin/vim"
-exe "setlocal rtp+=" . g:opamshare . "/ocp-indent/vim"
+au FileType ocaml setl commentstring=(*%s*) | setl sts=2 | setl sw=2
+let g:opamshare = substitute(system('opam config var share'), '\n$', '', '')
+exe "set rtp^=" . g:opamshare . "/merlin/vim"
+exe "set rtp^=" . g:opamshare . "/ocp-indent/vim"
 
-au FileType rust 2mat ErrorMsg '\%100v.'
+au FileType rust 2mat ErrorMsg '\%101v.'
