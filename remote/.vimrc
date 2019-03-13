@@ -17,11 +17,10 @@ set ls=2
 set stl=[%n:\%f]%m%r%w%y[%{&ff}][%{&enc}]%=[%l,%v][%P]
 set cul
 hi CursorLine cterm=NONE ctermbg=0 ctermfg=NONE
-2mat ErrorMsg '\%80v.'
 
-au BufNew * au BufAdd <buffer=abuf> 2mat ErrorMsg '\%80v.'
+au BufRead,BufNewFile * 2mat ErrorMsg '\%80v.'
 
 au BufReadPost *
-  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+  \ if line("'\"") >= 1 && line("'\"") <= line('$') && &ft !~# 'commit' |
   \   exe "normal! g`\"" |
   \ endif
