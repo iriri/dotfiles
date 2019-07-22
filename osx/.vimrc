@@ -12,7 +12,7 @@ set vb
 set t_vb=
 set hid
 set list
-set lcs=eol:$,tab:>-,trail:~,precedes:<,extends:>
+set lcs=tab:>-,trail:~,precedes:<,extends:>
 set ls=2
 set stl=[%n:\%f]%m%r%w%y[%{&ff}][%{&enc}]%=[%l,%v][%P]
 set cul
