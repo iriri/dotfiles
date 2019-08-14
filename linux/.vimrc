@@ -20,7 +20,7 @@ set cul
 hi CursorLine cterm=NONE ctermbg=0 ctermfg=NONE
 
 au BufRead,BufNewFile *
-  \ if &ft == 'myr' || &ft == 'mbld' || &ft == 'go' |
+  \ if &ft == 'myr' || &ft == 'mbld' || &ft == 'go' || &ft == 'cpp' |
   \   2mat ErrorMsg '\%100v.' |
   \ elseif &ft == 'rust' |
   \   2mat ErrorMsg '\%101v.' |
@@ -38,7 +38,7 @@ au FileType myr,mbld,go
   \ setl sts=8 |
   \ setl sw=8
 
-au FileType ocaml setl commentstring=(*%s*) | setl sts=2 | setl sw=2
+au FileType ocaml setl sts=2 | setl sw=2
 let g:opamshare = substitute(system('opam config var share'), '\n$', '', '')
 exe 'set rtp^=' . g:opamshare . '/merlin/vim'
 exe 'set rtp^=' . g:opamshare . '/ocp-indent/vim'

@@ -1,4 +1,4 @@
 rofi.modi: run,window
 rofi.font: ProggyTinyTTSZ 12
 rofi.width: 500
-rofi.theme: /home/iri/.config/rofi/themes/iri.rasi
+rofi.theme: ~/.config/rofi/themes/iri.rasi
