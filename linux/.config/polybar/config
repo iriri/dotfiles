@@ -1,11 +1,16 @@
 [colors]
-background = #2d2d2d
-background-alt = #3d3d3d
+background = #3d3d3d
+background-alt = #4d4d4d
 foreground = #f0f0f0
 foreground-alt = #777777
+color1 = #d6647c
+color2 = #ce8097
+color3 = #c19ab8
+color4 = #42749c
+color5 = #7ca5c7
+color6 = #8cbab2
 primary = #acd9ff
-secondary = #bf6276
-alert = #ff8f91
+alert = #ff7793
 
 [bar/default]
 width = 100%
@@ -58,11 +63,11 @@ type = internal/pulseaudio
 format-volume = <label-volume>
 label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
-label-volume-underline = #c86c6c
+label-volume-underline = ${colors.color1}
 
 label-muted =  muted
-label-muted-foreground = #777777
-label-muted-underline = #c86c6c
+label-muted-foreground = ${colors.foreground-alt}
+label-muted-underline = ${colors.color1}
 
 [module/wlan]
 type = internal/network
@@ -70,11 +75,11 @@ interface = wlp2s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #bf6276
+format-connected-underline = ${colors.color2}
 label-connected = %essid%
 
 format-disconnected = <label-disconnected>
-format-disconnected-underline = #bf6276
+format-disconnected-underline = ${colors.color2}
 label-disconnected =  disconnected
 label-disconnected-foreground = ${colors.foreground-alt}
 
@@ -90,7 +95,7 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #c19ab8
+format-underline = ${colors.color3}
 label = %percentage:2%%
 
 [module/memory]
@@ -98,7 +103,7 @@ type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #3f6e94
+format-underline = ${colors.color4}
 label = %percentage_used%%
 
 [module/battery]
@@ -108,14 +113,14 @@ adapter = AC
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = #488db1
+format-charging-underline = ${colors.color5}
 
 format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = #488db1
+format-discharging-underline = ${colors.color5}
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = #488db1
+format-full-underline = ${colors.color5}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -146,7 +151,7 @@ time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #83abb4
+format-underline = ${colors.color6}
 
 label = %date% %time%
 

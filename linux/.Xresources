@@ -2,35 +2,35 @@ URxvt.font: -windows-proggytinysz-medium-r-normal--10-80-96-96-c-60-iso8859-1
 URxvt.boldFont:
 URxvt.scrollBar: False
 
-URxvt.background: #2d2d2d
+URxvt.background: #3d3d3d
 URxvt.foreground: #f0f0f0
 
 ! black
-URxvt.color0: #262626
+URxvt.color0: #323232
 URxvt.color8: #666666
 
 ! red
-URxvt.color1: #c86c6c
-URxvt.color9: #ff8f91
+URxvt.color1: #d6647c
+URxvt.color9: #ff7793
 
 ! green
-URxvt.color2: #bf6276
+URxvt.color2: #ce8097
 URxvt.color10: #f99bb6
 
 ! yellow
 URxvt.color3: #c19ab8
-URxvt.color11: #fad8ef
+URxvt.color11: #fac2e8
 
 ! blue
-URxvt.color4: #3f6e94
-URxvt.color12: #67aad8
+URxvt.color4: #42749c
+URxvt.color12: #69aedd
 
 ! magenta
-URxvt.color5: #488db1
+URxvt.color5: #7ca5c7
 URxvt.color13: #acd9ff
 
 ! cyan
-URxvt.color6: #83abb4
+URxvt.color6: #8cbab2
 URxvt.color14: #b1e9f5
 
 ! white
