@@ -1,6 +1,7 @@
 URxvt.font: -windows-proggytinysz-medium-r-normal--10-80-96-96-c-60-iso8859-1
 URxvt.boldFont:
 URxvt.scrollBar: False
+URxvt.print-pipe: cat > "$HOME/urxvt.dump.$(date +%s)"
 
 URxvt.background: #3d3d3d
 URxvt.foreground: #f0f0f0

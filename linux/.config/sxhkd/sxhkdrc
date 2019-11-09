@@ -36,7 +36,7 @@ alt + y
 
 # swap the current node and the biggest node
 alt + g
-	bspc node -s biggest
+	bspc node -s biggest.local
 
 #
 # state/flags
