@@ -9,7 +9,7 @@ setopt noincappendhistory
 setopt nosharehistory
 setopt no_beep
 PROMPT="%F{004}[%F{002}%* %F{013}%n%F{004}]%f "
-RPROMPT="%F{008}%#%F{005}%2C"
+RPROMPT="%F{008}%#%F{004}%2C"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
@@ -45,14 +45,12 @@ export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+PATH=~/.cargo/bin:$PATH
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
 export GO111MODULE=on
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=~/devel/go
 PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-
-. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-eval `opam config env`
-alias ocaml="rlwrap ocaml"
-
-PATH=~/.cargo/bin:$PATH
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"

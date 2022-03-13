@@ -12,6 +12,7 @@ set sw=4
 set vb
 set t_vb=
 set hid
+set nowrap
 set list
 set lcs=tab:>-,trail:~,precedes:<,extends:>
 set ls=2
@@ -20,7 +21,12 @@ set cul
 hi CursorLine cterm=NONE ctermbg=0 ctermfg=NONE
 
 au BufRead,BufNewFile *
-  \ if &ft == 'myr' || &ft == 'mbld' || &ft == 'go' || &ft == 'cpp' |
+  \ if &ft == 'myr' ||
+  \   &ft == 'mbld' ||
+  \   &ft == 'forth' ||
+  \   &ft == 'cpp' ||
+  \   &ft == 'go'
+  \ |
   \   2mat ErrorMsg '\%100v.' |
   \ elseif &ft == 'rust' |
   \   2mat ErrorMsg '\%101v.' |

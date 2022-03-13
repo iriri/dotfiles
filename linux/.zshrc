@@ -31,17 +31,16 @@ alias rm="rm -i"
 . /usr/share/fzf/key-bindings.zsh
 export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"
 
-export GO111MODULE=on
-export GOPATH=~/devel/go
-PATH=$GOPATH/bin:$PATH
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+PATH=~/.cargo/bin:$PATH
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 . ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 alias ocaml="rlwrap ocaml -init ~/.ocamlinit_"
 export OPAMUTF8MSGS=no
 export OPAMUTF8=never
 
-alias elm-format="elm-format --elm-version 0.19"
-alias elm-fmt="elm-format --elm-version 0.19 --yes ."
-
-PATH=~/.cargo/bin:$PATH
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+export GO111MODULE=on
+export GOPATH=~/devel/go
+PATH=$GOPATH/bin:$PATH
