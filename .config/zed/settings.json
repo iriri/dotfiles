@@ -1,0 +1,65 @@
+{
+   "assistant": {
+      "dock": "left",
+      "enabled": false,
+      "version": "2"
+   },
+   "assistant_v2": {
+      "enabled": false
+   },
+   "buffer_font_family": "Iosevka Custom Fixed",
+   "buffer_font_size": 15,
+   "buffer_line_height": "standard",
+   "chat_panel": {
+      "button": false,
+      "dock": "left"
+   },
+   "collaboration_panel": {
+      "button": false,
+      "dock": "left"
+   },
+   "features": {
+      "copilot": false,
+      "inline_completion_provider": "none"
+   },
+   "lsp": {
+      "clangd": {
+         "binary": {
+            "arguments": ["--function-arg-placeholders=0"]
+         }
+      },
+      "rust-analyzer": {
+         "initialization_options": {
+            "imports": {
+               "granularity": {
+                  "group": "module"
+               },
+               "merge": {
+                  "glob": false
+               }
+            }
+         }
+      }
+   },
+   "notification_panel": {
+      "button": false,
+      "dock": "left"
+   },
+   "tab_size": 3,
+   "telemetry": {
+      "diagnostics": false,
+      "metrics": false
+   },
+   "terminal": {
+      "line_height": "standard"
+   },
+   "theme": {
+      "dark": "Nord",
+      "light": "Nord Light",
+      "mode": "system"
+   },
+   "ui_font_size": 15,
+   "use_autoclose": false,
+   "vim_mode": true,
+   "wrap_guides": [80, 100]
+}
