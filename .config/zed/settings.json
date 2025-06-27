@@ -11,7 +11,7 @@
    "buffer_font_size": 15,
    "buffer_line_height": "standard",
    "chat_panel": {
-      "button": false,
+      "button": "never",
       "dock": "left"
    },
    "collaboration_panel": {
@@ -20,8 +20,9 @@
    },
    "features": {
       "copilot": false,
-      "inline_completion_provider": "none"
+      "edit_prediction_provider": "none"
    },
+   "format_on_save": "off",
    "lsp": {
       "clangd": {
          "binary": {
@@ -56,10 +57,12 @@
    "theme": {
       "dark": "Nord",
       "light": "Nord Light",
-      "mode": "system"
+      "mode": "dark"
    },
    "ui_font_size": 15,
    "use_autoclose": false,
+   "use_auto_surround": false,
+   "use_on_type_format": false,
    "vim_mode": true,
    "wrap_guides": [80, 100]
 }
