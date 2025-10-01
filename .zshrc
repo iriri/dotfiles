@@ -26,3 +26,5 @@ alias rm="rm -i"
 
 . /usr/share/fzf/shell/key-bindings.zsh
 export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"
+
+. ~/.bun/_bun
