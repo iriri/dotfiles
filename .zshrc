@@ -22,7 +22,9 @@ export EDITOR=vim
 export VISUAL=vim
 alias grep="grep --color"
 alias ls="ls --color"
+alias nv=nvim
 alias rm="rm -i"
+alias tmux="TERM=tmux-256color tmux"
 
 . /usr/share/fzf/shell/key-bindings.zsh
 export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"

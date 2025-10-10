@@ -1,0 +1,6 @@
+[submodule ".config/nvim/pack/_vendor/start/nord"]
+	path = .config/nvim/pack/_vendor/start/nord
+	url = git@github.com:gbprod/nord.nvim.git
+[submodule ".config/nvim/pack/_vendor/start/fzf"]
+	path = .config/nvim/pack/_vendor/start/fzf
+	url = https://github.com/junegunn/fzf.git
