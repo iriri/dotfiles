@@ -2,7 +2,6 @@ vim.cmd([[
 filet indent on
 filet plugin off
 set rtp^=~/.vim
-set notgc
 set bs=2
 set mouse=
 set nu
@@ -35,22 +34,23 @@ au BufReadPost *
  \ endif
 
 au FileType cpp,fsharp,gluon set cc=100
-au FileType rust             set cc=101
-au FileType cpp,fsharp,rust  set mps+=<:>
+au FileType cpp,fsharp,gluon,rust set mps+=<:>
 
 au FileType go,mbld,myr
  \ setl noet |
  \ setl sts=8 |
  \ setl sw=8 |
  \ setl cc=100
+
+au FileType rust
+ \ set cc=101 |
+ \ set comments^=:///,://!
 ]])
 
 require("nord").setup({
    transparent = true,
    styles = {comments = {italic = false}},
    on_highlights = function(hls, c)
-      hls["CursorLine"] = {bg = c.polar_night.origin}
-      hls["ColorColumn"] = {bg = c.polar_night.origin}
       hls["StatusLine"] = {fg = c.polar_night.light, bg = c.frost.polar_water}
       hls["StatusLineNC"] = {fg = c.polar_night.origin, bg = c.frost.polar_water}
       hls["DiagnosticUnderlineError"] = {link = "ErrorMsg"}
@@ -97,6 +97,7 @@ vim.lsp.config["rust-analyzer"] = {
    settings = {
       ["rust-analyzer"] = {
          check = {command = "clippy"},
+         completion = {callable = {snippets = "none"}},
          imports = {
             granularity = {group = "module"},
             merge = {glob = false},
