@@ -83,8 +83,52 @@ vim.keymap.set("n", "<esc>", function()
   end
 end)
 
+vim.lsp.config["fsautocomplete"] = {
+   cmd = vim.lsp.rpc.connect("/run/lspmux.sock"),
+   filetypes = {"fsharp"},
+   root_dir = function(bufnum, f)
+      f(vim.fs.root(bufnum, {
+         function(name, _)
+            return name:match("%.sln$") ~= nil
+         end,
+         function(name, _)
+            return name:match("%.fsproj$") ~= nil
+         end,
+      }))
+   end,
+   init_options = {
+      AutomaticWorkspaceInit = true,
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = "fsautocomplete",
+         args = {"--adaptive-lsp-server-enabled"},
+      },
+   },
+   settings = {
+      FSharp = {
+         GenerateBinlog = false,
+         Linter = true,
+         UnionCaseStubGeneration = true,
+         UnionCaseStubGenerationBody = 'failwith "Not Implemented"',
+         RecordStubGeneration = true,
+         RecordStubGenerationBody = 'failwith "Not Implemented"',
+         InterfaceStubGeneration = true,
+         InterfaceStubGenerationObjectIdentifier = 'this',
+         InterfaceStubGenerationMethodBody = 'failwith "Not Implemented"',
+         SimplifyNameAnalyzer = true,
+         UnnecessaryParenthesesAnalyzer = false,
+         UnusedOpensAnalyzer = true,
+         UnusedDeclarationsAnalyzer = true,
+         UseSdkScripts = true,
+         ResolveNamespaces = true,
+      },
+   },
+}
+vim.lsp.enable("fsautocomplete")
+
 vim.lsp.config["rust-analyzer"] = {
-   cmd = vim.lsp.rpc.connect("/run/ra-multiplex.sock"),
+   cmd = vim.lsp.rpc.connect("/run/lspmux.sock"),
    filetypes = {"rust"},
    root_markers = {"Cargo.lock"},
    init_options = {

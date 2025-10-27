@@ -1,0 +1,2 @@
+listen = "/run/lspmux.sock"
+connect = "/run/lspmux.sock"

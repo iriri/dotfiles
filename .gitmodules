@@ -3,4 +3,7 @@
 	url = git@github.com:gbprod/nord.nvim.git
 [submodule ".config/nvim/pack/_vendor/start/fzf"]
 	path = .config/nvim/pack/_vendor/start/fzf
-	url = https://github.com/junegunn/fzf.git
+	url = git@github.com:junegunn/fzf.git
+[submodule ".config/nvim/pack/_vendor/start/vim-fsharp"]
+	path = .config/nvim/pack/_vendor/start/vim-fsharp
+	url = git@github.com:iriri/vim-fsharp.git
