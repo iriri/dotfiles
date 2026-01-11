@@ -89,7 +89,7 @@ vim.lsp.config["fsautocomplete"] = {
    root_dir = function(bufnum, f)
       f(vim.fs.root(bufnum, {
          function(name, _)
-            return name:match("%.sln$") ~= nil
+            return name:match("%.slnx?$") ~= nil
          end,
          function(name, _)
             return name:match("%.fsproj$") ~= nil
