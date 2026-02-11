@@ -1,7 +1,7 @@
+vim.g.editorconfig = false
 vim.cmd([[
 filet indent on
 filet plugin off
-set rtp^=~/.vim
 set bs=2
 set mouse=
 set nu
@@ -29,22 +29,20 @@ set winborder=single
 set wim=longest,list,full
 
 au BufReadPost *
- \ if line("'\"") >= 1 && line("'\"") <= line('$') && &ft !~# 'commit' |
+ \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# "commit" |
  \    exe "normal! g`\"" |
  \ endif
 
-au FileType cpp,fsharp,gluon set cc=100
-au FileType cpp,fsharp,gluon,rust set mps+=<:>
-
 au FileType go,mbld,myr
- \ setl noet |
- \ setl sts=8 |
- \ setl sw=8 |
- \ setl cc=100
+ \ set noet |
+ \ set sts=8 |
+ \ set sw=8
 
-au FileType rust
- \ set cc=101 |
- \ set comments^=:///,://!
+au FileType cpp,fsharp,go,mbld,myr set cc=100
+au FileType rust,typescript set cc=101
+au FileType c,cpp,fsharp,rust set comments^=:///
+au FileType c,cpp,rust set comments^=://!
+au FileType cpp,fsharp,rust,typescript set mps+=<:>
 ]])
 
 require("nord").setup({
@@ -83,8 +81,15 @@ vim.keymap.set("n", "<esc>", function()
   end
 end)
 
+vim.api.nvim_create_autocmd("LspAttach", {
+   callback = function(evt)
+      vim.bo[evt.buf].formatexpr = nil
+      vim.bo[evt.buf].formatprg = nil
+   end,
+})
+
 vim.lsp.config["fsautocomplete"] = {
-   cmd = vim.lsp.rpc.connect("/run/lspmux.sock"),
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
    filetypes = {"fsharp"},
    root_dir = function(bufnum, f)
       f(vim.fs.root(bufnum, {
@@ -101,7 +106,7 @@ vim.lsp.config["fsautocomplete"] = {
       lspMux = {
          version = "1",
          method = "connect",
-         server = "fsautocomplete",
+         server = vim.fn.expand("~/.dotnet/tools/fsautocomplete"),
          args = {"--adaptive-lsp-server-enabled"},
       },
    },
@@ -128,14 +133,14 @@ vim.lsp.config["fsautocomplete"] = {
 vim.lsp.enable("fsautocomplete")
 
 vim.lsp.config["rust-analyzer"] = {
-   cmd = vim.lsp.rpc.connect("/run/lspmux.sock"),
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
    filetypes = {"rust"},
    root_markers = {"Cargo.lock"},
    init_options = {
       lspMux = {
          version = "1",
          method = "connect",
-         server = "rust-analyzer",
+         server = vim.fn.expand("~/.cargo/bin/rust-analyzer"),
       },
    },
    settings = {
@@ -150,3 +155,29 @@ vim.lsp.config["rust-analyzer"] = {
    },
 }
 vim.lsp.enable("rust-analyzer")
+
+vim.lsp.config["deno lsp"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"typescript"},
+   root_markers = {"deno.lock"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/.deno/bin/deno"),
+         args = {"lsp"},
+         env = {NO_COLOR = "1"},
+      },
+   },
+   settings = {
+      deno = {
+         enable = true,
+         unstable = true,
+         suggest = {
+            completeFunctionCalls = false,
+            imports = {autoDiscover = false},
+         },
+      },
+   },
+}
+vim.lsp.enable("deno lsp")

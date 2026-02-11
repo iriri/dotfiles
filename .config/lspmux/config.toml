@@ -1,2 +1,2 @@
-listen = "/run/lspmux.sock"
-connect = "/run/lspmux.sock"
+listen = "/run/user/1000/lspmux.sock"
+connect = "/run/user/1000/lspmux.sock"

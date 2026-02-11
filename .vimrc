@@ -20,25 +20,24 @@ set lcs=tab:>-,trail:~,precedes:<,extends:>
 set ls=2
 set stl=[%n:\%f]%m%r%w%y[%{&ff}][%{&enc}]%=[%l,%v][%P]
 set cul
+hi Visual ctermbg=4
 hi CursorLine cterm=NONE ctermfg=NONE ctermbg=0
 set cc=80
 hi ColorColumn cterm=NONE ctermfg=NONE ctermbg=0
 set wim=longest,list,full
 
 au BufReadPost *
- \ if line("'\"") >= 1 && line("'\"") <= line('$') && &ft !~# 'commit' |
+ \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# "commit" |
  \    exe "normal! g`\"" |
  \ endif
 
-au FileType cpp,fsharp,gluon set cc=100
-au FileType cpp,fsharp,gluon,rust set mps+=<:>
-
 au FileType go,mbld,myr
- \ setl noet |
- \ setl sts=8 |
- \ setl sw=8 |
- \ setl cc=100
+ \ set noet |
+ \ set sts=8 |
+ \ set sw=8
 
-au FileType rust
- \ set cc=101 |
- \ set comments^=:///,://!
+au FileType cpp,fsharp,go,mbld,myr set cc=100
+au FileType rust,typescript set cc=101
+au FileType c,cpp,fsharp,rust set comments^=:///
+au FileType c,cpp,rust set comments^=://!
+au FileType cpp,fsharp,rust,typescript set mps+=<:>

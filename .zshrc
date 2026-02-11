@@ -9,6 +9,7 @@ RPROMPT="%F{008}%#%F{004}%2C"
 setopt nobeep
 bindkey -e
 bindkey "^[[3~" delete-char
+fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit
 autoload -Uz edit-command-line
@@ -27,5 +28,3 @@ alias rm="rm -i"
 
 . /usr/share/fzf/shell/key-bindings.zsh
 export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"
-
-. ~/.bun/_bun
