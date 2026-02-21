@@ -2,6 +2,7 @@ vim.g.editorconfig = false
 vim.cmd([[
 filet indent on
 filet plugin off
+set noar
 set bs=2
 set mouse=
 set nu
@@ -74,12 +75,22 @@ vim.diagnostic.config({
 })
 vim.keymap.set("n", "gre", vim.diagnostic.open_float)
 vim.keymap.set("n", "<esc>", function()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_config(win).relative == "win" then
-      vim.api.nvim_win_close(win, false)
-    end
-  end
+   for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_config(win).relative == "win" then
+         vim.api.nvim_win_close(win, false)
+      end
+   end
 end)
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = "qf",
+   callback = function()
+      vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", {
+         buffer = true,
+         silent = true,
+      })
+   end,
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
    callback = function(evt)
@@ -87,6 +98,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.bo[evt.buf].formatprg = nil
    end,
 })
+
+if vim.env.TERM_PROGRAM == "tmux" then
+   vim.api.nvim_create_autocmd("VimResume", {
+      callback = function()
+         vim.cmd("checkt")
+      end,
+   })
+end
 
 vim.lsp.config["fsautocomplete"] = {
    cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
