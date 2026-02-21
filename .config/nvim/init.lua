@@ -74,12 +74,22 @@ vim.diagnostic.config({
 })
 vim.keymap.set("n", "gre", vim.diagnostic.open_float)
 vim.keymap.set("n", "<esc>", function()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_config(win).relative == "win" then
-      vim.api.nvim_win_close(win, false)
-    end
-  end
+   for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_config(win).relative == "win" then
+         vim.api.nvim_win_close(win, false)
+      end
+   end
 end)
+
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = "qf",
+   callback = function()
+      vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", {
+         buffer = true,
+         silent = true,
+      })
+   end,
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
    callback = function(evt)
