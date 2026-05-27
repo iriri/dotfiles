@@ -21,10 +21,23 @@ unset LS_COLORS
 export TERM=xterm-16color
 export EDITOR=vim
 export VISUAL=vim
+alias ag=ast-grep
+alias fd="fd -c never"
 alias grep="grep --color"
 alias ls="ls --color"
 alias nv=nvim
 alias rm="rm -i"
 
-. /usr/share/fzf/shell/key-bindings.zsh
-export FZF_DEFAULT_OPTS="--reverse --inline-info --preview 'head -100 {}'"
+. <(fzf --zsh)
+export FZF_DEFAULT_COMMAND="fd -HIt f"
+export FZF_CTRL_T_COMMAND="fd -E .git"
+export FZF_ALT_C_COMMAND="fd -t d -E .git"
+export FZF_DEFAULT_OPTS="--reverse --info inline --preview 'head -100 {}'"
+
+_fzf_compgen_path() {
+  fd -E .git . "$1" | sed 's$^\./$$'
+}
+
+_fzf_compgen_dir() {
+  fd -t d -E .git . "$1" | sed 's$^\./$$'
+}
