@@ -60,6 +60,8 @@ require("nord").setup({
 })
 vim.cmd.colorscheme("nord")
 
+require("mini.align").setup()
+
 vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
 vim.keymap.set("n", "<C-p>", function()
    vim.call("fzf#run", {
@@ -80,6 +82,24 @@ vim.keymap.set("n", "<esc>", function()
          vim.api.nvim_win_close(win, false)
       end
    end
+end)
+
+vim.keymap.set("n", "]e", function()
+   vim.diagnostic.goto_next({
+      severity = vim.diagnostic.severity.ERROR,
+   })
+end)
+vim.keymap.set("n", "[e", function()
+   vim.diagnostic.goto_prev({
+      severity = vim.diagnostic.severity.ERROR,
+   })
+end)
+
+vim.keymap.set("n", "grl", function()
+   vim.diagnostic.setloclist()
+end)
+vim.keymap.set("n", "grq", function()
+   vim.diagnostic.setqflist()
 end)
 
 vim.api.nvim_create_autocmd("FileType", {
