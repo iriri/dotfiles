@@ -190,6 +190,7 @@ vim.lsp.config["rust-analyzer"] = {
             granularity = {group = "module"},
             merge = {glob = false},
          },
+         inlayHints = false,
       },
    },
 }
@@ -220,3 +221,46 @@ vim.lsp.config["deno lsp"] = {
    },
 }
 vim.lsp.enable("deno lsp")
+
+vim.lsp.config["gopls"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"go"},
+   root_markers = {"go.mod", "go.work"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/devel/go/bin/gopls"),
+      },
+   },
+   settings = {
+      gopls = {
+         gofumpt = true,
+         staticcheck = true,
+      },
+   },
+}
+vim.lsp.enable("gopls")
+
+vim.lsp.config["ty"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"python"},
+   root_markers = {"uv.lock"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/.local/bin/ty"),
+         args = {"server"},
+      },
+   },
+   settings = {
+      ty = {
+         inlayHints = {
+            callArgumentNames = false,
+            variableTypes = false,
+         },
+      },
+   },
+}
+vim.lsp.enable("ty")

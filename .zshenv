@@ -5,6 +5,7 @@ export TMUX_TMPDIR=~/.cache/tmux
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export GOPATH=~/devel/go
+export GOTELEMETRY=off
 PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 
 . ~/.cargo/env
