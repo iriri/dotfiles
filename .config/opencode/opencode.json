@@ -1,0 +1,155 @@
+{
+   "$schema": "https://opencode.ai/config.json",
+   "update": "disable",
+   "permissions": [
+      { "action": "*", "resource": "*", "effect": "ask" },
+      { "action": "read", "resource": "*", "effect": "allow" },
+      { "action": "glob", "resource": "*", "effect": "allow" },
+      { "action": "grep", "resource": "*", "effect": "allow" },
+      { "action": "shell", "resource": "cat *", "effect": "allow" },
+      { "action": "shell", "resource": "echo *", "effect": "allow" },
+      { "action": "shell", "resource": "fd *", "effect": "allow" },
+      { "action": "shell", "resource": "fd *-x *", "effect": "deny" },
+      { "action": "shell", "resource": "fd *-X *", "effect": "deny" },
+      { "action": "shell", "resource": "fd *--exec *", "effect": "deny" },
+      { "action": "shell", "resource": "fd *--exec-batch *", "effect": "deny" },
+      { "action": "shell", "resource": "file *", "effect": "allow" },
+      { "action": "shell", "resource": "find *", "effect": "allow" },
+      { "action": "shell", "resource": "find *-delete*", "effect": "deny" },
+      { "action": "shell", "resource": "find *-exec*", "effect": "deny" },
+      { "action": "shell", "resource": "find *-execdir*", "effect": "deny" },
+      { "action": "shell", "resource": "find *-ok*", "effect": "deny" },
+      { "action": "shell", "resource": "find *-okdir*", "effect": "deny" },
+      { "action": "shell", "resource": "git diff *", "effect": "allow" },
+      { "action": "shell", "resource": "git log *", "effect": "allow" },
+      { "action": "shell", "resource": "git show *", "effect": "allow" },
+      { "action": "shell", "resource": "git status *", "effect": "allow" },
+      { "action": "shell", "resource": "grep *", "effect": "allow" },
+      { "action": "shell", "resource": "head *", "effect": "allow" },
+      { "action": "shell", "resource": "ls *", "effect": "allow" },
+      { "action": "shell", "resource": "printf *", "effect": "allow" },
+      { "action": "shell", "resource": "rg *", "effect": "allow" },
+      { "action": "shell", "resource": "sort *", "effect": "allow" },
+      { "action": "shell", "resource": "stat *", "effect": "allow" },
+      { "action": "shell", "resource": "tail *", "effect": "allow" },
+      { "action": "shell", "resource": "tree *", "effect": "allow" },
+      { "action": "shell", "resource": "wc *", "effect": "allow" },
+      { "action": "shell", "resource": "which *", "effect": "allow" },
+      { "action": "question", "resource": "*", "effect": "allow" },
+      { "action": "execute", "resource": "*", "effect": "deny" },
+      { "action": "external_directory", "resource": "*", "effect": "deny" },
+      { "action": "skill", "resource": "*", "effect": "deny" }
+   ],
+   "agents": {
+      "title": {
+         "model": "openrouter/deepseek/deepseek-v4.1-flash"
+      }
+   },
+   "lsp": {
+      "fsharp": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/.dotnet/tools/fsautocomplete",
+            "--",
+            "--adaptive-lsp-server-enabled"
+         ],
+         "initialization": {
+            "FSharp": {
+               "GenerateBinlog": false,
+               "Linter": true,
+               "UnionCaseStubGeneration": true,
+               "UnionCaseStubGenerationBody": "failwith \"Not Implemented\"",
+               "RecordStubGeneration": true,
+               "RecordStubGenerationBody": "failwith \"Not Implemented\"",
+               "InterfaceStubGeneration": true,
+               "InterfaceStubGenerationObjectIdentifier": "this",
+               "InterfaceStubGenerationMethodBody": "failwith \"Not Implemented\"",
+               "SimplifyNameAnalyzer": true,
+               "UnnecessaryParenthesesAnalyzer": false,
+               "UnusedOpensAnalyzer": true,
+               "UnusedDeclarationsAnalyzer": true,
+               "UseSdkScripts": true,
+               "ResolveNamespaces": true
+            }
+         }
+      },
+      "rust": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/.cargo/bin/rust-analyzer"
+         ],
+         "initialization": {
+            "rust-analyzer": {
+               "check": {"command": "clippy"},
+               "completion": {"callable": {"snippets": "none"}},
+               "imports": {
+                  "granularity": {"group": "module"},
+                  "merge": {"glob": false}
+               }
+            }
+         }
+      },
+      "deno": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/.deno/bin/deno",
+            "--",
+            "lsp"
+         ],
+         "env": {
+            "NO_COLOR": "1"
+         },
+         "initialization": {
+            "deno": {
+               "enable": true,
+               "unstable": true,
+               "suggest": {
+                  "completeFunctionCalls": false,
+                  "imports": {"autoDiscover": false}
+               }
+            }
+         }
+      },
+      "gopls": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/devel/go/bin/gopls"
+         ],
+         "initialization": {
+            "gopls": {
+               "gofumpt": true,
+               "staticcheck": true
+            }
+         }
+      },
+      "ty": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/.local/bin/ty",
+            "--",
+            "server"
+         ]
+      },
+      "quint": {
+         "command": [
+            "lspmux",
+            "client",
+            "--server-path",
+            "$HOME/.deno/bin/quint-language-server",
+            "--",
+            "--stdio"
+         ],
+         "extensions": [".qnt"]
+      }
+   }
+}

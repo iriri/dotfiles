@@ -73,7 +73,11 @@ end)
 
 vim.diagnostic.config({
    virtual_text = true,
-   jump = {float = true},
+   jump = {
+      on_jump = function()
+         vim.diagnostic.open_float()
+      end,
+   },
 })
 vim.keymap.set("n", "gre", vim.diagnostic.open_float)
 vim.keymap.set("n", "<esc>", function()
@@ -190,7 +194,6 @@ vim.lsp.config["rust-analyzer"] = {
             granularity = {group = "module"},
             merge = {glob = false},
          },
-         inlayHints = false,
       },
    },
 }
@@ -254,13 +257,20 @@ vim.lsp.config["ty"] = {
          args = {"server"},
       },
    },
-   settings = {
-      ty = {
-         inlayHints = {
-            callArgumentNames = false,
-            variableTypes = false,
-         },
+}
+vim.lsp.enable("ty")
+
+vim.lsp.config["quint-language-server"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"quint"},
+   root_markers = {".git"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/.deno/bin/quint-language-server"),
+         args = {"--stdio"},
       },
    },
 }
-vim.lsp.enable("ty")
+vim.lsp.enable("quint-language-server")
