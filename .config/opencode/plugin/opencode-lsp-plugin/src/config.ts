@@ -69,7 +69,7 @@ function resolveServers(lsp: unknown, debug: boolean): ServerConfig[] {
   for (const [id, raw] of Object.entries(lsp)) {
     if (!isRecord(raw)) continue
     if (raw.disabled === true) continue
-    const command = stringArray(raw.command)
+    const command = stringArray(raw.command).map(expandEnv)
     if (command.length === 0) {
       if (debug) console.error(`[lsp] server "${id}" has no command; skipping`)
       continue
@@ -151,6 +151,10 @@ function normalizeExtensions(values: string[]): string[] {
     if (!result.includes(trimmed)) result.push(trimmed)
   }
   return result
+}
+
+function expandEnv(value: string): string {
+  return value.replace(/\$\{(\w+)\}|\$(\w+)/g, (match, braced, bare) => process.env[braced ?? bare] ?? match)
 }
 
 function stringArray(value: unknown): string[] {

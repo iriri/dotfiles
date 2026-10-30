@@ -1,6 +1,14 @@
 {
    "$schema": "https://opencode.ai/config.json",
-   "update": "disable",
+   "model": "openrouter/deepseek/deepseek-v4.1-flash",
+   "agents": {
+      "title": {
+         "model": "openrouter/deepseek/deepseek-v4.1-flash"
+      }
+   },
+   "experimental": {
+      "todo": true
+   },
    "permissions": [
       { "action": "*", "resource": "*", "effect": "ask" },
       { "action": "read", "resource": "*", "effect": "allow" },
@@ -40,11 +48,6 @@
       { "action": "external_directory", "resource": "*", "effect": "deny" },
       { "action": "skill", "resource": "*", "effect": "deny" }
    ],
-   "agents": {
-      "title": {
-         "model": "openrouter/deepseek/deepseek-v4.1-flash"
-      }
-   },
    "lsp": {
       "fsharp": {
          "command": [
@@ -86,6 +89,7 @@
             "rust-analyzer": {
                "check": {"command": "clippy"},
                "completion": {"callable": {"snippets": "none"}},
+               "diagnostics": {"disabled": ["inactive_code"]},
                "imports": {
                   "granularity": {"group": "module"},
                   "merge": {"glob": false}
@@ -151,5 +155,6 @@
          ],
          "extensions": [".qnt"]
       }
-   }
+   },
+   "update": "disable"
 }

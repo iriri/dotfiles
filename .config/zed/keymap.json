@@ -1,9 +1,0 @@
-[
-   {
-      "context": "Workspace",
-      "bindings": {
-         "alt-j": "workspace::ToggleBottomDock",
-         "alt-b": "workspace::ToggleLeftDock"
-      }
-   }
-]

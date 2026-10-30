@@ -4,9 +4,6 @@
 [submodule ".config/nvim/pack/_vendor/start/mini.align"]
 	path = .config/nvim/pack/_vendor/start/mini.align
 	url = git@github.com:nvim-mini/mini.align.git
-[submodule ".config/nvim/pack/_vendor/start/nord"]
-	path = .config/nvim/pack/_vendor/start/nord
-	url = git@github.com:gbprod/nord.nvim.git
 [submodule ".config/nvim/pack/_vendor/start/vim-fsharp"]
 	path = .config/nvim/pack/_vendor/start/vim-fsharp
 	url = git@github.com:iriri/vim-fsharp.git

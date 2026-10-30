@@ -14,6 +14,8 @@ export GOPATH=~/devel/go
 export GOTELEMETRY=off
 PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 
+export OPENCODE_DISABLE_CLAUDE_CODE=1
+export OPENCODE_DISABLE_FREE_MODELS=1
 PATH=~/.opencode/bin:"$PATH"
 
 PATH=~/.local/bin:"$PATH"

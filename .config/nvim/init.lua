@@ -1,5 +1,6 @@
 vim.g.editorconfig = false
 vim.cmd([[
+colo nord
 filet indent on
 filet plugin off
 set noar
@@ -46,20 +47,6 @@ au FileType c,cpp,rust set comments^=://!
 au FileType cpp,fsharp,rust,typescript set mps+=<:>
 ]])
 
-require("nord").setup({
-   transparent = true,
-   styles = {comments = {italic = false}},
-   on_highlights = function(hls, c)
-      hls["StatusLine"] = {fg = c.polar_night.light, bg = c.frost.polar_water}
-      hls["StatusLineNC"] = {fg = c.polar_night.origin, bg = c.frost.polar_water}
-      hls["DiagnosticUnderlineError"] = {link = "ErrorMsg"}
-      hls["DiagnosticUnderlineWarn"] = {link = "WarningMsg"}
-      hls["DiagnosticUnderlineInfo"] = {link = "WarningMsg"}
-      hls["DiagnosticUnderlineHint"] = {link = "WarningMsg"}
-   end,
-})
-vim.cmd.colorscheme("nord")
-
 require("mini.align").setup()
 
 vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
@@ -75,7 +62,7 @@ vim.diagnostic.config({
    virtual_text = true,
    jump = {
       on_jump = function()
-         vim.diagnostic.open_float()
+         vim.diagnostic.open_float({focus = false})
       end,
    },
 })
@@ -89,12 +76,14 @@ vim.keymap.set("n", "<esc>", function()
 end)
 
 vim.keymap.set("n", "]e", function()
-   vim.diagnostic.goto_next({
+   vim.diagnostic.jump({
+      count = 1,
       severity = vim.diagnostic.severity.ERROR,
    })
 end)
 vim.keymap.set("n", "[e", function()
-   vim.diagnostic.goto_prev({
+   vim.diagnostic.jump({
+      count = -1,
       severity = vim.diagnostic.severity.ERROR,
    })
 end)
@@ -190,6 +179,7 @@ vim.lsp.config["rust-analyzer"] = {
       ["rust-analyzer"] = {
          check = {command = "clippy"},
          completion = {callable = {snippets = "none"}},
+         diagnostics = {disabled = {"inactive_code"}},
          imports = {
             granularity = {group = "module"},
             merge = {glob = false},
@@ -260,6 +250,21 @@ vim.lsp.config["ty"] = {
 }
 vim.lsp.enable("ty")
 
+vim.lsp.config["endo"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"endo"},
+   root_markers = {".git"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/.local/bin/endo"),
+         args = {"--lsp"},
+      },
+   },
+}
+vim.lsp.enable("endo")
+
 vim.lsp.config["quint-language-server"] = {
    cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
    filetypes = {"quint"},
@@ -274,3 +279,10 @@ vim.lsp.config["quint-language-server"] = {
    },
 }
 vim.lsp.enable("quint-language-server")
+
+vim.api.nvim_set_hl(0, "DiffVisual", {fg = "#d8dee9", bg = "#4c566a"})
+vim.api.nvim_create_autocmd({"WinEnter", "OptionSet"}, {
+   callback = function()
+      vim.wo.winhighlight = vim.wo.diff and "Visual:DiffVisual" or ""
+   end,
+})

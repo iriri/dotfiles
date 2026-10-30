@@ -42,9 +42,7 @@ au FileType c,cpp,fsharp,rust set comments^=:///
 au FileType c,cpp,rust set comments^=://!
 au FileType cpp,fsharp,rust,typescript set mps+=<:>
 
-if &diff
-   hi DiffAdd    ctermfg=7
-   hi DiffDelete ctermfg=7
-   hi DiffChange ctermfg=7
-   hi DiffText   ctermfg=7
-endif
+hi DiffAdd    ctermfg=7
+hi DiffDelete ctermfg=7
+hi DiffChange ctermfg=7
+hi DiffText   ctermfg=7

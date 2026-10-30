@@ -14,7 +14,7 @@ autoload -Uz compinit
 compinit
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '^x^e' edit-command-line
+bindkey "^x^e" edit-command-line
 
 unset COLORTERM
 unset LS_COLORS
@@ -29,15 +29,27 @@ alias nv=nvim
 alias rm="rm -i"
 
 . <(fzf --zsh)
-export FZF_DEFAULT_COMMAND="fd -HIt f"
-export FZF_CTRL_T_COMMAND="fd -E .git"
-export FZF_ALT_C_COMMAND="fd -t d -E .git"
+export FZF_DEFAULT_COMMAND="fd -HLt f -E .git"
+export FZF_CTRL_T_COMMAND="fd -HLE .git"
+export FZF_ALT_C_COMMAND="fd -HLt d -E .git"
 export FZF_DEFAULT_OPTS="--reverse --info inline --preview 'head -100 {}'"
 
 _fzf_compgen_path() {
-  fd -E .git . "$1" | sed 's$^\./$$'
+  fd -HLE .git . "$1" | sed 's$^\./$$'
 }
 
 _fzf_compgen_dir() {
-  fd -t d -E .git . "$1" | sed 's$^\./$$'
+  fd -HLt d -E .git . "$1" | sed 's$^\./$$'
 }
+
+lsh() {
+   print -z -- "$(command lsh "$@")"
+}
+
+_lsh() {
+   BUFFER=$(command lsh -p $BUFFER)
+   CURSOR=${#BUFFER}
+   zle && zle reset-prompt
+}
+zle -N _lsh
+bindkey "^x^l" _lsh
