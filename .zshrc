@@ -32,7 +32,8 @@ alias rm="rm -i"
 export FZF_DEFAULT_COMMAND="fd -HLt f -E .git"
 export FZF_CTRL_T_COMMAND="fd -HLE .git"
 export FZF_ALT_C_COMMAND="fd -HLt d -E .git"
-export FZF_DEFAULT_OPTS="--reverse --info inline --preview 'head -100 {}'"
+export FZF_DEFAULT_OPTS="--reverse --info inline --preview 'head \
+   -\$FZF_PREVIEW_LINES {}' --preview-window noinfo"
 
 _fzf_compgen_path() {
   fd -HLE .git . "$1" | sed 's$^\./$$'

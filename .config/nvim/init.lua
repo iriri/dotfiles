@@ -3,6 +3,7 @@ vim.cmd([[
 colo nord
 filet indent on
 filet plugin off
+set tgc
 set noar
 set bs=2
 set mouse=
@@ -32,7 +33,7 @@ set wim=longest,list,full
 
 au BufReadPost *
  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# "commit" |
- \    exe "normal! g`\"" |
+ \    exe 'normal! g`"' |
  \ endif
 
 au FileType go,mbld,myr
@@ -40,20 +41,59 @@ au FileType go,mbld,myr
  \ set sts=8 |
  \ set sw=8
 
-au FileType cpp,fsharp,go,mbld,myr set cc=100
+au FileType cpp,endo,fsharp,go,mbld,myr set cc=100
 au FileType rust,typescript set cc=101
 au FileType c,cpp,fsharp,rust set comments^=:///
 au FileType c,cpp,rust set comments^=://!
-au FileType cpp,fsharp,rust,typescript set mps+=<:>
+au FileType cpp,endo,fsharp,rust,typescript set mps+=<:>
 ]])
 
 require("mini.align").setup()
 
 vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
+
 vim.keymap.set("n", "<C-p>", function()
    vim.call("fzf#run", {
       source = "git ls-files",
-      sink = "e",
+      options = {"--color=16"},
+      sink = function(file)
+         local buf = vim.fn.bufnr(vim.fn.fnamemodify(file, ":p"))
+         local win = vim.fn.bufwinid(buf)
+         if win ~= -1 then
+            vim.api.nvim_set_current_win(win)
+         elseif buf ~= -1 then
+            vim.cmd.buffer(buf)
+         else
+            vim.cmd.edit(vim.fn.fnameescape(file))
+         end
+      end,
+      up = "49%",
+   })
+end)
+vim.keymap.set("n", "<C-_>", function()
+   local buf = vim.api.nvim_get_current_buf()
+   local tmp = vim.fn.tempname()
+   vim.api.nvim_buf_call(buf, function()
+      vim.cmd("sil keepa noa w! " .. tmp)
+   end)
+   vim.call("fzf#run", {
+      source = "nl -ba -w4 -s' ' " .. tmp,
+      options = {
+         "--color=16",
+         "--tiebreak=index",
+         "--nth=2..",
+         "--preview",
+         "awk -vn={1} -vc=$(($FZF_PREVIEW_LINES / 2)) 'NR >= n - c && NR <= n + c' " .. tmp,
+      },
+      sink = function(ent)
+         local lnum = tonumber(ent:match("^%s*(%d+)"))
+         if lnum then
+            vim.api.nvim_win_set_cursor(0, {lnum, 0})
+         end
+      end,
+      exit = function()
+         vim.fn.delete(tmp)
+      end,
       up = "49%",
    })
 end)
@@ -76,16 +116,10 @@ vim.keymap.set("n", "<esc>", function()
 end)
 
 vim.keymap.set("n", "]e", function()
-   vim.diagnostic.jump({
-      count = 1,
-      severity = vim.diagnostic.severity.ERROR,
-   })
+   vim.diagnostic.jump({count = 1, severity = vim.diagnostic.severity.ERROR})
 end)
 vim.keymap.set("n", "[e", function()
-   vim.diagnostic.jump({
-      count = -1,
-      severity = vim.diagnostic.severity.ERROR,
-   })
+   vim.diagnostic.jump({count = -1, severity = vim.diagnostic.severity.ERROR})
 end)
 
 vim.keymap.set("n", "grl", function()
@@ -98,10 +132,7 @@ end)
 vim.api.nvim_create_autocmd("FileType", {
    pattern = "qf",
    callback = function()
-      vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", {
-         buffer = true,
-         silent = true,
-      })
+      vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", {buffer = true, silent = true})
    end,
 })
 
@@ -180,10 +211,7 @@ vim.lsp.config["rust-analyzer"] = {
          check = {command = "clippy"},
          completion = {callable = {snippets = "none"}},
          diagnostics = {disabled = {"inactive_code"}},
-         imports = {
-            granularity = {group = "module"},
-            merge = {glob = false},
-         },
+         imports = {granularity = {group = "module"}, merge = {glob = false}},
       },
    },
 }
@@ -206,10 +234,7 @@ vim.lsp.config["deno lsp"] = {
       deno = {
          enable = true,
          unstable = true,
-         suggest = {
-            completeFunctionCalls = false,
-            imports = {autoDiscover = false},
-         },
+         suggest = {completeFunctionCalls = false, imports = {autoDiscover = false}},
       },
    },
 }
@@ -220,11 +245,7 @@ vim.lsp.config["gopls"] = {
    filetypes = {"go"},
    root_markers = {"go.mod", "go.work"},
    init_options = {
-      lspMux = {
-         version = "1",
-         method = "connect",
-         server = vim.fn.expand("~/devel/go/bin/gopls"),
-      },
+      lspMux = {version = "1", method = "connect", server = vim.fn.expand("~/devel/go/bin/gopls")},
    },
    settings = {
       gopls = {

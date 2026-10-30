@@ -1,14 +1,8 @@
 {
    "$schema": "https://opencode.ai/config.json",
    "model": "openrouter/deepseek/deepseek-v4.1-flash",
-   "agents": {
-      "title": {
-         "model": "openrouter/deepseek/deepseek-v4.1-flash"
-      }
-   },
-   "experimental": {
-      "todo": true
-   },
+   "agents": { "title": { "model": "openrouter/deepseek/deepseek-v4.1-flash" } },
+   "experimental": { "todo": true },
    "permissions": [
       { "action": "*", "resource": "*", "effect": "ask" },
       { "action": "read", "resource": "*", "effect": "allow" },
@@ -79,70 +73,33 @@
          }
       },
       "rust": {
-         "command": [
-            "lspmux",
-            "client",
-            "--server-path",
-            "$HOME/.cargo/bin/rust-analyzer"
-         ],
+         "command": ["lspmux", "client", "--server-path", "$HOME/.cargo/bin/rust-analyzer"],
          "initialization": {
             "rust-analyzer": {
-               "check": {"command": "clippy"},
-               "completion": {"callable": {"snippets": "none"}},
-               "diagnostics": {"disabled": ["inactive_code"]},
-               "imports": {
-                  "granularity": {"group": "module"},
-                  "merge": {"glob": false}
-               }
+               "check": { "command": "clippy" },
+               "completion": { "callable": { "snippets": "none" } },
+               "diagnostics": { "disabled": ["inactive_code"] },
+               "imports": { "granularity": { "group": "module" }, "merge": { "glob": false } }
             }
          }
       },
       "deno": {
-         "command": [
-            "lspmux",
-            "client",
-            "--server-path",
-            "$HOME/.deno/bin/deno",
-            "--",
-            "lsp"
-         ],
-         "env": {
-            "NO_COLOR": "1"
-         },
+         "command": ["lspmux", "client", "--server-path", "$HOME/.deno/bin/deno", "--", "lsp"],
+         "env": { "NO_COLOR": "1" },
          "initialization": {
             "deno": {
                "enable": true,
                "unstable": true,
-               "suggest": {
-                  "completeFunctionCalls": false,
-                  "imports": {"autoDiscover": false}
-               }
+               "suggest": { "completeFunctionCalls": false, "imports": { "autoDiscover": false } }
             }
          }
       },
       "gopls": {
-         "command": [
-            "lspmux",
-            "client",
-            "--server-path",
-            "$HOME/devel/go/bin/gopls"
-         ],
-         "initialization": {
-            "gopls": {
-               "gofumpt": true,
-               "staticcheck": true
-            }
-         }
+         "command": ["lspmux", "client", "--server-path", "$HOME/devel/go/bin/gopls"],
+         "initialization": { "gopls": { "gofumpt": true, "staticcheck": true } }
       },
       "ty": {
-         "command": [
-            "lspmux",
-            "client",
-            "--server-path",
-            "$HOME/.local/bin/ty",
-            "--",
-            "server"
-         ]
+         "command": ["lspmux", "client", "--server-path", "$HOME/.local/bin/ty", "--", "server"]
       },
       "quint": {
          "command": [
