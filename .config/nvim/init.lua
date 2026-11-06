@@ -70,11 +70,30 @@ vim.keymap.set("n", "<C-p>", function()
       up = "49%",
    })
 end)
+vim.keymap.set("n", "<M-p>", function()
+   local bufs = {}
+   for _, buf in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
+      bufs[#bufs + 1] = vim.fn.fnamemodify(buf.name, ":.")
+   end
+   vim.call("fzf#run", {
+      source = bufs,
+      options = {"--color=16"},
+      sink = function(file)
+         local buf = vim.fn.bufnr(file)
+         local win = vim.fn.bufwinid(buf)
+         if win ~= -1 then
+            vim.api.nvim_set_current_win(win)
+         else
+            vim.cmd.buffer(buf)
+         end
+      end,
+      up = "49%",
+   })
+end)
 vim.keymap.set("n", "<C-_>", function()
-   local buf = vim.api.nvim_get_current_buf()
    local tmp = vim.fn.tempname()
-   vim.api.nvim_buf_call(buf, function()
-      vim.cmd("sil keepa noa w! " .. tmp)
+   vim.api.nvim_buf_call(vim.api.nvim_get_current_buf(), function()
+      vim.cmd("sil keepa noa w " .. tmp)
    end)
    vim.call("fzf#run", {
       source = "nl -ba -w4 -s' ' " .. tmp,
@@ -216,6 +235,21 @@ vim.lsp.config["rust-analyzer"] = {
    },
 }
 vim.lsp.enable("rust-analyzer")
+
+vim.lsp.config["clangd"] = {
+   cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
+   filetypes = {"c", "cpp"},
+   root_markers = {"compile_commands.json", "compile_flags.txt", ".clangd"},
+   init_options = {
+      lspMux = {
+         version = "1",
+         method = "connect",
+         server = vim.fn.expand("~/.local/bin/clangd"),
+         args = {"--completion-style=detailed", "--function-arg-placeholders=0"},
+      },
+   },
+}
+vim.lsp.enable("clangd")
 
 vim.lsp.config["deno lsp"] = {
    cmd = vim.lsp.rpc.connect("/run/user/1000/lspmux.sock"),
